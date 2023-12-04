@@ -4,19 +4,11 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                 script {
+                script {
                     docker.withRegistry('https://se4458presentation.azurecr.io', 'se4458presentation') {
                         def customImage = docker.build("se4458presentation.azurecr.io/se4458:latest")
                         customImage.push()
                     }
-            }
-        }
-
-        stage('Push to Azure Container Registry') {
-            steps {
-                script {
-                    sh 'docker login se4458presentation.azurecr.io -u se4458presentation -p dY0lio50M3k62DxjrkRyqJCRc7JarIPJ3nKTiBs2Uk+ACRALJPXM'
-                    sh 'docker push se4458presentation.azurecr.io/se4458:latest'
                 }
             }
         }
